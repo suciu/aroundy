@@ -1,0 +1,36 @@
+.colleaguesAddNewBtn{
+    background: #61D186;
+    border-radius: 4px;
+    width: 160px;
+    height: 40px;
+    color: white;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+}
+.userFilterByName{
+    width: 230px;
+    height: 40px;
+    border: 0;
+    color: #969696;
+    background: #FFFFFF;
+    border-radius: 10px;
+}
+table{
+    width: 100%;
+}
+table tr th{
+    text-align: inherit;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 18px;
+    align-items: center;
+}
+.colleaguesListTr{
+    background-color: white;
+}
+

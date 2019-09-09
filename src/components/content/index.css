@@ -1,0 +1,75 @@
+.dashboard{
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+}
+.dashboardText{
+    top: 1.95%;
+    bottom: 94.14%;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+}
+.whiteBackground{
+    background-color: white;
+    margin-bottom: 50px;
+    border-radius: 10px;
+}
+.marginLeft{
+    max-width: 24% !important;
+    margin-left: 15px !important;
+}
+.maxWidth{
+    max-width: 24% !important;
+}
+.height{
+    height: 150px;
+}
+.dashboardLor{
+    padding: 12px 0;
+}
+.dashboardLorText{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 21px;
+    float: left;
+}
+.dashboardLorLink{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: right;
+    text-decoration-line: underline;
+}
+.dashboardLorData{
+    margin-top: 50px;
+}
+
+.dashboardLorDataText{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 24px;
+    float: left;
+}
+.dashboardLorDataStatus{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: right;
+}
+.dataStatusPending{
+    color: #EA9D22;
+}
+.dataStatusApproved{
+    color: #61D186;
+}

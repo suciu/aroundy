@@ -1,0 +1,7 @@
+Dockerfile
+README.md
+devops
+node_modules/
+build
+npm-debug.log
+/node_modules/

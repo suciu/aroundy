@@ -1,0 +1,11 @@
+.sideBarMenu a{
+    color: #5E5E5E;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
