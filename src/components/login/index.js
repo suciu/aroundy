@@ -5,7 +5,7 @@ const Login = (props) => {
         <div className="announcement">
             <div>
                 <div className="login-form">
-                    <form action="/examples/actions/confirmation.php" method="post">
+                    <form>
                         <h2 className="text-center">Log in</h2>
                         <div className="form-group">
                             <input onChange={(e) => props.onChange(e, "email")} type="text" className="form-control" placeholder="Username" required="required" />

@@ -15,7 +15,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getUserDetails: dashboardActions.get,
-    getAllColleagues: colleaguesActions.get
+    getAllColleagues: colleaguesActions.get,
+    postNewUser: colleaguesActions.save
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Colleagues);

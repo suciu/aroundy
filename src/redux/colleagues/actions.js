@@ -15,6 +15,21 @@ const get = (token) => async (dispatch) => {
   }
 };
 
+const save = (newColleague) => async (dispatch) => {
+    try {
+        dispatch(colleaguesAC.get.pending());
+
+        const data = await colleaguesAPI.save(newColleague);
+
+        dispatch(colleaguesAC.get.success(data));
+
+        return Promise.resolve();
+    } catch (err) {
+        dispatch(colleaguesAC.get.error(err));
+    }
+};
+
 export default {
-  get
+  get,
+  save
 }
