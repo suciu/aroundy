@@ -1,12 +1,10 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 import { Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom'
 
 import "../index.css";
 
-const Content = () => {
+const Content = (props) => {
     return (
         <Col xs="9" className="content dashboard">
             <div className="justify-content-md-center marginTop20">
@@ -53,7 +51,7 @@ const Content = () => {
                         </div>
                         <div className="dashboardLorData">
                             <div className="dashboardLorDataText">
-                                <span className="userDays">16,5 DAYS</span>
+                                <span className="userDays">{props.user ? props.user.balance : 0} DAYS</span>
                                 /From the total of 21 days
                             </div>
                         </div>

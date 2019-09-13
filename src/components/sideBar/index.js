@@ -14,7 +14,8 @@ function logout(){
 }
 
 const SideBar = (props) => {
-    const role = props.user.role ? props.user.role.alias : undefined;
+    const user = props.data.user;
+    const role = user ? user.role.alias : undefined;
 
     return (
         <Col xs="3" className="sideBar">
@@ -26,10 +27,10 @@ const SideBar = (props) => {
             </div>
             <div className="userWelcomeDetails">
                 <p className="userWelcome">
-                    Welcome, <b>{props.user.name}</b>!<br />Your holiday balance has
+                    Welcome, <b>{user ? user.name : ""}</b>!<br />Your holiday balance has
                 </p>
                 <p className="userDays">
-                    16,5 DAYS
+                    {user ? user.balance:""} DAYS
                 </p>
                 <p className="logout" onClick={logout}>
                    Logout
@@ -38,23 +39,23 @@ const SideBar = (props) => {
             <div  className="sideBarMenu">
                 <ul className="sideBarMenuItem">
                     <li className="sideBarMenuItemActive">
-                        <Link to={'dashboard'} className="active">Dashboard</Link>
+                        <Link to={'dashboard'}>Dashboard</Link>
                     </li>
-                    <li className="">
-                        <Link to={'calendar'} className="active">Calendar</Link>
+                    <li className="sideBarMenuItemActive">
+                        <Link to={'calendar'}>Calendar</Link>
                     </li>
-                    <li className="">
-                        <Link to={'requests'} className="active">Requests</Link>
+                    <li className="sideBarMenuItemActive">
+                        <Link to={'requests'}>Requests</Link>
                     </li>
                     { role === "hr" || role === "pm" ? (
-                        <li className="">
-                            <Link to={'colleagues'} className="active">Colleagues</Link>
+                        <li className="sideBarMenuItemActive">
+                            <Link to={'colleagues'}>Colleagues</Link>
                         </li>
                     ) : ("")
                     }
                     { role === "hr" || role === "pm" ? (
-                        <li className="">
-                            <Link to={'reports'} className="active">Reports</Link>
+                        <li className="sideBarMenuItemActive">
+                            <Link to={'reports'}>Reports</Link>
                         </li>
                     ) : ("")
                     }

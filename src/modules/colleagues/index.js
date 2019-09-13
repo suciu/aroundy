@@ -19,9 +19,6 @@ const UserDetail = ({user}) => {
 export default class Colleagues extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            modal: false
-        };
 
         this.state = {
             name: "",
@@ -30,6 +27,7 @@ export default class Colleagues extends Component {
             email: "",
             contactPerson: "",
             contactPersonPhone: "",
+            modal: false,
             error: {
                 text: "",
                 fields: []
@@ -70,19 +68,16 @@ export default class Colleagues extends Component {
         };
 
         this.props.postNewUser(data);
-        this.toggle();//close modal
-        this.props.getAllColleagues(this.props.token);//get new users;
-        
-        // setTimeout(()=>{this.toggle();window.location="/colleagues"}, 200);
+        setTimeout(()=>{this.toggle();window.location="/colleagues"}, 200);
     }
 
     render() {
-        const user = this.props.userDetails.data;
+        const data = this.props.userDetails.data;
         const colleagues = this.props.colleagues.data;
 
         return(
             <Row>
-                <SideBar user={user}/>
+                <SideBar data={data}/>
                 <Col xs="9" className="content dashboard">
                     <div className="justify-content-md-center marginTop20">
                         <Row>
@@ -180,7 +175,7 @@ export default class Colleagues extends Component {
                                             <button onClick={this.toggle} className="colleaguesAddNewBtn">Cancel</button>
                                         </div>
                                         <div className="dashboardLorLink">
-                                            <button onClick={this.handleLogin} className="colleaguesAddNewBtn">Add</button>
+                                            <button type="button" onClick={this.handleLogin} className="colleaguesAddNewBtn">Add</button>
                                         </div>
                                     </ModalFooter>
                                 </Modal>

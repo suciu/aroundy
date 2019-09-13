@@ -6,6 +6,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.backgroundWhite{
+    background-color: white;
+}
+.noPadding{
+    padding: 0 !important;
+}
 .marginTop20{
     margin-top: 20px;
 }
@@ -51,4 +57,10 @@ body {
     text-align: center;
     border-radius: 15px;
     cursor: pointer;
+}
+
+a:hover{
+    color: #5f5f5f !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
 }

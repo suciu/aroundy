@@ -7,11 +7,11 @@ const get = async (token) => {
                 .get(`http://aroundy.local/api/user/all-info`)
                 .query({token: token})
                 .end((err, res) => {
-                    if (!res.body.allInfo) {
+                    if (!res.body.data) {
                         return reject(res.body.success);
                     }
 
-                    return resolve(res.body.allInfo);
+                    return resolve(res.body.data);
                 });
     });
 

@@ -1,6 +1,6 @@
 .appLogo{
     position: absolute;
-    left: 16%;
+    left: 20%;
     right: 16%;
     top: 6%;
     bottom: 89%;
@@ -8,7 +8,7 @@
 }
 .userImage{
     position: absolute;
-    left: 40%;
+    left: 43%;
     right: 40%;
     top: 16%;
     bottom: 75%;
@@ -16,7 +16,7 @@
 }
 .userWelcomeDetails{
     position: absolute;
-    left: 35%;
+    left: 40%;
     top: 26.37%;
     bottom: 69.73%;
 }
@@ -47,19 +47,22 @@
     right: 0;
     top: 40%;
     bottom: 43%;
+    padding: 0;
 }
 .sideBarMenu ul{
     list-style: none;
     cursor: pointer;
 }
-
+.sideBarMenuItem{
+    padding: 0;
+}
 .sideBarMenuItem li{
     position: relative;
     cursor: pointer;
-    left: 30%;
-    right: 2%;
-    top: 41.8%;
-    bottom: 56.25%;
+    /*left: 30%;*/
+    /*right: 2%;*/
+    /*top: 41.8%;*/
+    /*bottom: 56.25%;*/
     padding: 15px;
     font-family: Montserrat;
     font-style: normal;

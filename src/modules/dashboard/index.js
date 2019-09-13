@@ -13,12 +13,12 @@ export default class Dashboard extends Component {
     }
 
     render() {
-        const user = this.props.userDetails.data;
+        const data = this.props.userDetails.data;
 
         return(
             <Row>
-                <SideBar user={user}/>
-                <Content />
+                <SideBar data={data}/>
+                <Content user={data.user}/>
             </Row>
         );
     }
