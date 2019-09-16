@@ -4,7 +4,6 @@ import { Container, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter } from 
 import FullCalendar from '@fullcalendar/react';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import Moment from 'react-moment';
 
 import SideBar from '../../components/sideBar';
 
@@ -45,7 +44,7 @@ export default class CalendarComponent extends Component {
 
     handleSelect = (arg) => {
 
-        const diff = new Date(this.state.endDate - this.state.startDate);
+        const diff = new Date(arg.end - arg.start);
 
         this.setState({
             startDate: arg.start,
@@ -70,7 +69,7 @@ export default class CalendarComponent extends Component {
         };
 
         this.props.saveNewRequest(data);
-        setTimeout(()=>{this.toggle();window.location="/calendar"}, 200);
+        // setTimeout(()=>{this.toggle();window.location="/calendar"}, 200);
     };
 
     onChange(e, path){

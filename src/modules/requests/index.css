@@ -3,3 +3,12 @@
     margin-bottom: 15px;
     border-radius: 10px;
 }
+.approveBtn{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    color: #61D186;
+    cursor: pointer;
+}
