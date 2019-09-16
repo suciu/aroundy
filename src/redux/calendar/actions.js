@@ -15,6 +15,21 @@ const save = (newRequest) => async (dispatch) => {
     }
 };
 
+const approveRequest = (requestData) => async (dispatch) => {
+    try {
+        dispatch(requestsAC.get.pending());
+
+        const data = await requestsAPI.approveRequest(requestData);
+
+        dispatch(requestsAC.get.success(data));
+
+        return Promise.resolve();
+    } catch (err) {
+        dispatch(requestsAC.get.error(err));
+    }
+};
+
 export default {
-  save
+  save,
+  approveRequest
 }

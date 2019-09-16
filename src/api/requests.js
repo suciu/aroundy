@@ -48,8 +48,25 @@ const save = async (newRequest) => {
     return await response;
 };
 
+const approveRequest = async (requestData) => {
+    let response = new Promise((resolve, reject) => {
+        request
+            .post(`http://aroundy.local/api/requests/approve`)
+            .send(requestData)
+            .end((err, res) => {
+                if (!res.body.data) {
+                    return reject(res.body.success);
+                }
+
+                return resolve(res.body.data);
+            });
+    });
+    return await response;
+};
+
 export default {
     all,
     allColleaguesReq,
-    save
+    save,
+    approveRequest
 }

@@ -1,58 +1,10 @@
 import React, { Component } from 'react';
 import { Container, Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
-import {Moment} from 'react-moment';
 
 import "./index.css"
 
 import SideBar from '../../components/sideBar';
-
-const MyDetail = ({user}) => {
-    const startDate =  new Date(user.startDate).toLocaleDateString("en-US"),
-          endDate =  new Date(user.endDate).toLocaleDateString("en-US");
-
-    return (
-        <tr className="colleaguesListTr">
-            <td>{user.id}</td>
-            <td>{user.status}</td>
-            <td>
-                {user.interval === 1
-                    ?
-                    startDate
-                    :
-                    `${startDate} - ${endDate}`
-                }
-            </td>
-            <td>{user.type}</td>
-            <td>-</td>
-        </tr>
-    );
-};
-
-const ColleagueDetail = (props) => {
-    const startDate =  new Date(props.user.startDate).toLocaleDateString("en-US"),
-        endDate =  new Date(props.user.endDate).toLocaleDateString("en-US");
-
-    return (
-        <tr className="colleaguesListTr">
-            <td>{props.user.id}</td>
-            <td>{props.user.user ? props.user.user.name : ""}</td>
-            <td>
-                {props.user.interval === 1
-                    ?
-                    `${startDate} (${props.user.interval}) day`
-                    :
-                    `${startDate} - ${endDate} (${props.user.interval}) days`
-                }
-            </td>
-            <td>{props.user.type}</td>
-            <td>{props.user.status}</td>
-            <td>
-                <span onClick={props.onClick(props.user)} className="approveBtn">Approve</span>
-            </td>
-        </tr>
-    );
-};
 
 export default class Requests extends Component {
     constructor(props) {
@@ -60,7 +12,10 @@ export default class Requests extends Component {
 
         this.state = {
             activeTab: '1',
-            modal: false
+            modal: false,
+            currentUserToBeApproved: {},
+            currentRequestToBeApproved: {},
+            requestData: {}
         };
 
         this.toggle = this.toggle.bind(this);
@@ -90,35 +45,66 @@ export default class Requests extends Component {
         }));
     }
 
-    approve(user) {
-        console.log(user);
+    approve(request) {
+        this.setState({
+            currentUserToBeApproved: request,
+            requestData: {
+                userToBeApproved: request.user.id,
+                requestToBeApproved: request.id,
+                userWhoApproves: this.props.userDetails.data.user.id
+            }
+        });
+
+        this.toggleModal();
+
+        console.log(this.state.requestData)
     }
 
     render() {
         const data = this.props.userDetails.data,
               userRequests = this.props.userRequests.data,
-              userColleaguesRequests = this.props.userRequests.data;
-
-        const colleaguesList = userColleaguesRequests.map( (user, index) =>
-                  <tr key={index} className="colleaguesListTr">
+              userColleaguesRequests = this.props.userRequests.data,
+              colleaguesList = userColleaguesRequests.map( (request, index) =>
+                    <tr key={request.id}
+                        className="colleaguesListTr">
+                        <td>{request.id}</td>
+                        <td>{request.user ? request.user.name : ""}</td>
+                        <td>
+                            {request.interval === 1
+                                ?
+                                `${new Date(request.startDate).toLocaleDateString("en-US")} (${request.interval}) day`
+                                :
+                                `${new Date(request.startDate).toLocaleDateString("en-US")} - ${new Date(request.endDate).toLocaleDateString("en-US")} (${request.interval}) days`
+                            }
+                        </td>
+                        <td>{request.type}</td>
+                        <td>{request.status}</td>
+                        <td>
+                            {
+                                request.status !== "approved"  && (data.user.role.alias === "hr" || data.user.role.alias === "pm") ?
+                                <span
+                                    onClick={(e) => this.approve(request)}
+                                    className="approveBtn">Approve</span>
+                                :
+                                "-"
+                            }
+                        </td>
+                    </tr>
+              ),
+              myDetails =  userRequests.map( (user, index) =>
+                  <tr key={user.id} className="colleaguesListTr">
                       <td>{user.id}</td>
+                      <td>{user.status}</td>
                       <td>
-                          1
+                          {user.interval === 1
+                              ?
+                              new Date(user.startDate).toLocaleDateString("en-US")
+                              :
+                              `${new Date(user.startDate).toLocaleDateString("en-US")} - ${new Date(user.endDate).toLocaleDateString("en-US")}`
+                          }
                       </td>
-                      <td>
-                          1
-                      </td>
-                      <td>
-                          1
-                      </td>
-                      <td>
-                          1
-                      </td>
-                      <td>
-                            <span
-                                onClick={(e) => this.approve(e, user)}
-                                className="approveBtn">Approve</span>
-                      </td>
+                      <td>{user.type}</td>
+                      <td>-</td>
                   </tr>
               );
 
@@ -179,7 +165,7 @@ export default class Requests extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {userRequests.map((user, index) => <MyDetail key={index} user={user} /> )}
+                                                {myDetails}
                                             </tbody>
                                         </table>
                                     </Col>
@@ -200,9 +186,7 @@ export default class Requests extends Component {
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                {
-                                                    colleaguesList
-                                                }
+                                                {colleaguesList}
                                             </tbody>
                                         </table>
                                     </Col>
@@ -216,7 +200,7 @@ export default class Requests extends Component {
                        toggle={this.toggleModal}
                        className={this.props.className}
                 >
-                    <ModalHeader toggle={this.toggleModal}>Leave request from Muntean Teodor </ModalHeader>
+                    <ModalHeader toggle={this.toggleModal}>Leave request from {this.state.currentUserToBeApproved.user ? this.state.currentUserToBeApproved.user.name : ""} </ModalHeader>
                     <ModalBody>
                         <Container>
                             <Row className="show-grid">
