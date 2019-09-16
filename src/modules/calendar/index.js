@@ -4,6 +4,7 @@ import { Container, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter } from 
 import FullCalendar from '@fullcalendar/react';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import Holidays from 'date-holidays';
 
 import SideBar from '../../components/sideBar';
 
@@ -26,7 +27,9 @@ export default class CalendarComponent extends Component {
             days: 0,
             leaveType: "",
             notifyPm: "",
-            comments: ""
+            comments: "",
+            calendarEvents: [],
+            calendarComponentRef: React.createRef()
         };
 
         this.toggle = this.toggle.bind(this);
@@ -34,6 +37,29 @@ export default class CalendarComponent extends Component {
 
     componentDidMount(){
         this.props.getUserDetails(this.props.token);
+
+        const hd = Holidays('RO'),
+              holidays = hd.getHolidays(new Date().getFullYear());
+
+        console.log(holidays);
+
+        const calendarEvents = holidays.map((holiday, index)=>{
+
+            return  {
+                title: holiday.name,
+                start: holiday.start,
+                end: holiday.end,
+                color: '#FFE1E2',
+                editable: false,
+                rendering: "background",
+                overlap: false,
+                allDay: true
+            }
+        });
+
+        this.setState({
+            calendarEvents: calendarEvents
+        });
     }
 
     toggle() {
@@ -78,14 +104,6 @@ export default class CalendarComponent extends Component {
         return this.setState(state);
     }
 
-    calendarComponentRef = React.createRef();
-    state = {
-        calendarWeekends: true,
-        calendarEvents: [ // initial event data
-            { title: 'Event Now', start: new Date() }
-        ]
-    };
-
     render() {
         const data = this.props.userDetails.data,
               pms = this.props.userDetails.data.pms;
@@ -112,9 +130,10 @@ export default class CalendarComponent extends Component {
                                         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                                     }}
                                     plugins={[ interactionPlugin, dayGridPlugin ]}
-                                    ref={ this.calendarComponentRef }
-                                    weekends="true"
+                                    ref={ this.state.calendarComponentRef }
+                                    weekends={true}
                                     select={ this.handleSelect }
+                                    events={ this.state.calendarEvents }
                                 />
                             </Col>
                         </Row>
