@@ -16,7 +16,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getUserDetails: dashboardActions.get,
     getUserRequests: requestsActions.get,
-    getColleaguesRequests: requestsActions.all
+    getColleaguesRequests: requestsActions.all,
+    approveRequest: requestsActions.approveRequest
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Requests);

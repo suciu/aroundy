@@ -180,7 +180,7 @@ export default class CalendarComponent extends Component {
                                                         <option value="D">Delegatie</option>
                                                         <option value="B">Breavement (deces in familie )</option>
                                                         <option value="CC">Concediu casatorie</option>
-                                                        <option value="CF">concediu fara plata</option>
+                                                        <option value="CF">Concediu fara plata</option>
                                                         <option value="CP">Concediu Paternal</option>
                                                         <option value="TD">Training day</option>
                                                     </select>

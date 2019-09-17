@@ -21,6 +21,7 @@ export default class Requests extends Component {
         this.toggle = this.toggle.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.approve = this.approve.bind(this);
+        this.handleApproveRequest = this.handleApproveRequest.bind(this);
     }
 
     componentDidMount(){
@@ -56,12 +57,16 @@ export default class Requests extends Component {
         });
 
         this.toggleModal();
+    }
 
-        console.log(this.state.requestData)
+    handleApproveRequest(){
+        this.props.approveRequest(this.state.requestData);
+        setTimeout(()=>{this.toggle();window.location="/requests"}, 200);
     }
 
     render() {
         const data = this.props.userDetails.data,
+              pms = this.props.userDetails.data.pms,
               userRequests = this.props.userRequests.data,
               userColleaguesRequests = this.props.userRequests.data,
               colleaguesList = userColleaguesRequests.map( (request, index) =>
@@ -81,7 +86,7 @@ export default class Requests extends Component {
                         <td>{request.status}</td>
                         <td>
                             {
-                                request.status !== "approved"  && (data.user.role.alias === "hr" || data.user.role.alias === "pm") ?
+                                request.status === "pending"  && (data.user.role.alias === "hr" || data.user.role.alias === "pm") ?
                                 <span
                                     onClick={(e) => this.approve(request)}
                                     className="approveBtn">Approve</span>
@@ -209,16 +214,17 @@ export default class Requests extends Component {
                                         <div>
                                             <div className="form-group">
                                                 <label htmlFor="startDate">Selected date</label>
-                                                { this.state.days === 1 ?
+                                                { this.state.currentUserToBeApproved.interval === 1 ?
                                                     <Col xs={8}>
-                                                        <input id="startDate" type="text" className="form-control" disabled={true} value={""} />
-                                                    </Col> :
+                                                        <input id="startDate" type="text" className="form-control" disabled={true} value={new Date(this.state.currentUserToBeApproved.startDate).toLocaleDateString("en-US")} />
+                                                    </Col>
+                                                    :
                                                     <div>
                                                         <Col xs={6}>
-                                                            <input id="startDate" type="text" className="form-control" disabled={true} value={""} />
+                                                            <input id="startDate" type="text" className="form-control" disabled={true} value={new Date(this.state.currentUserToBeApproved.startDate).toLocaleDateString("en-US")} />
                                                         </Col>
                                                         <Col xs={6}>
-                                                            <input id="endDate" type="text" className="form-control" disabled={true} value={""} />
+                                                            <input id="endDate" type="text" className="form-control" disabled={true} value={new Date(this.state.currentUserToBeApproved.endDate).toLocaleDateString("en-US")} />
                                                         </Col>
                                                     </div>
                                                 }
@@ -226,13 +232,34 @@ export default class Requests extends Component {
                                             <Col xs={8}>
                                                 <div className="form-group">
                                                     <label htmlFor="leaveType">Leave Type</label>
-                                                    <input value={""} disabled={true} id="leaveType" type="text" className="form-control" required="required" />
+                                                    <select disabled={true} id="leaveType" className="form-control">
+                                                        <option value={this.state.currentUserToBeApproved.type === "CO"} >Concediu anual</option>
+                                                        <option value={this.state.currentUserToBeApproved.type === "CM"} >Concediu medical</option>
+                                                        <option value={this.state.currentUserToBeApproved.type === "SD"} >Sick day</option>
+                                                        <option value={this.state.currentUserToBeApproved.type === "FE"} >Family emergency</option>
+                                                        <option value={this.state.currentUserToBeApproved.type === "BD"} >Blood donation</option>
+                                                        <option value={this.state.currentUserToBeApproved.type === "TOL"} >Timp liber compensat (time of in lieu)</option>
+                                                        <option value={this.state.currentUserToBeApproved.type === "D"} >Delegatie</option>
+                                                        <option value={this.state.currentUserToBeApproved.type === "B"} >Breavement (deces in familie )</option>
+                                                        <option value={this.state.currentUserToBeApproved.type === "CC"} >Concediu casatorie</option>
+                                                        <option value={this.state.currentUserToBeApproved.type === "CF"} >concediu fara plata</option>
+                                                        <option value={this.state.currentUserToBeApproved.type === "CP"} >Concediu Paternal</option>
+                                                        <option value={this.state.currentUserToBeApproved.type === "TD"} >Training day</option>
+                                                    </select>
                                                 </div>
                                             </Col>
                                             <Col xs={8}>
                                                 <div className="form-group">
                                                     <label htmlFor="notifyPm">Notify PM</label>
-                                                    <input value={""} disabled={true} id="notifyPm" type="text" className="form-control" required="required" />
+                                                    <select id="notifyPm" className="form-control">
+                                                        {pms ?
+                                                            pms.map((item, key) =>
+                                                                <option key={item.id} value={parseInt(this.state.currentUserToBeApproved.notifyPm) === item.id}>{item.name}</option>
+                                                            )
+                                                            :
+                                                            ""
+                                                        }
+                                                    </select>
                                                 </div>
                                             </Col>
                                             <Col xs={12}>
@@ -252,7 +279,7 @@ export default class Requests extends Component {
                             <button onClick={this.toggleModal} className="colleaguesAddNewBtn">Cancel</button>
                         </div>
                         <div className="dashboardLorLink">
-                            <button type="button" onClick={this.handleAddNewRequest} className="colleaguesAddNewBtn">Approve</button>
+                            <button type="button" onClick={this.handleApproveRequest} className="colleaguesAddNewBtn">Approve</button>
                         </div>
                     </ModalFooter>
                 </Modal>

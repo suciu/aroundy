@@ -12,8 +12,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getUserDetails: dashboardActions.get,
-    saveNewRequest: calendarActions.save,
-    approveRequest: calendarActions.approveRequest
+    saveNewRequest: calendarActions.save
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
