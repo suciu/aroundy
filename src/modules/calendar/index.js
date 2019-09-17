@@ -39,12 +39,9 @@ export default class CalendarComponent extends Component {
         this.props.getUserDetails(this.props.token);
 
         const hd = Holidays('RO'),
-              holidays = hd.getHolidays(new Date().getFullYear());
+            holidays = hd.getHolidays(new Date().getFullYear());
 
-        console.log(holidays);
-
-        const calendarEvents = holidays.map((holiday, index)=>{
-
+        const events = holidays.map((holiday, index)=>{
             return  {
                 title: holiday.name,
                 start: holiday.start,
@@ -57,9 +54,15 @@ export default class CalendarComponent extends Component {
             }
         });
 
+
         this.setState({
-            calendarEvents: calendarEvents
+            calendarEvents: events
         });
+    }
+
+    componentDidUpdate() {
+
+
     }
 
     toggle() {
@@ -106,7 +109,26 @@ export default class CalendarComponent extends Component {
 
     render() {
         const data = this.props.userDetails.data,
-              pms = this.props.userDetails.data.pms;
+              pms = this.props.userDetails.data.pms,
+              userRequests = data.user ? data.user.requests : [],
+              approvedColor = "#95ffaf",
+              rejectedColor = "#ff3b3b",
+              pendingColor = "#ffea00";
+
+        const requestsEvents = userRequests.map((req, index)=>{
+            return  {
+                title: req.type,
+                start: new Date(req.startDate),
+                end: new Date(req.endDate),
+                color: req.status === "pending" ? pendingColor : ( req.status === "approved" ? approvedColor : rejectedColor ) ,
+                editable: false,
+                rendering: "background",
+                overlap: false,
+                allDay: true
+            }
+        });
+
+        let calendarEvents = requestsEvents.concat(this.state.calendarEvents);
 
         return(
             <Row>
@@ -133,7 +155,7 @@ export default class CalendarComponent extends Component {
                                     ref={ this.state.calendarComponentRef }
                                     weekends={true}
                                     select={ this.handleSelect }
-                                    events={ this.state.calendarEvents }
+                                    events={ calendarEvents }
                                 />
                             </Col>
                         </Row>
