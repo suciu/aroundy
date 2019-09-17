@@ -4,7 +4,7 @@ const get = async (token) => {
 
     let response = new Promise((resolve, reject) => {
             request
-                .get(`http://aroundy.local/api/user/all-info`)
+                .get(`http://aroundy.demo/api/user/all-info`)
                 .query({token: token})
                 .end((err, res) => {
                     if (!res.body.data) {

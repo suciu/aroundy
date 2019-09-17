@@ -13,7 +13,7 @@ export const postLogin = (credentials) => {
         try {
             let promise = new Promise((resolve, reject) => {
                 request
-                    .post(`http://aroundy.local/api/auth`)
+                    .post(`http://aroundy.demo/api/auth`)
                     .send(credentials)
                     .end((err, res) => {
                         if (!res.body.token) {

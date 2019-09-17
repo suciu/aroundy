@@ -3,7 +3,7 @@ import request from "superagent";
 const all = async (token) => {
     let response = new Promise((resolve, reject) => {
             request
-                .get(`http://aroundy.local/api/user/all`)
+                .get(`http://aroundy.demo/api/user/all`)
                 .query({token: token})
                 .end((err, res) => {
                     if (!res.body.allUsers) {
@@ -19,7 +19,7 @@ const all = async (token) => {
 const save = async (newColleague) => {
     let response = new Promise((resolve, reject) => {
         request
-            .post(`http://aroundy.local/api/user/save`)
+            .post(`http://aroundy.demo/api/user/save`)
             .send(newColleague)
             .end((err, res) => {
                 if (!res.body.newUser) {
